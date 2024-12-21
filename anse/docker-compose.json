@@ -1,0 +1,17 @@
+{
+    "$schema": "../compose-schema.json",
+    "services": [
+        {
+            "name": "anse",
+            "environment": {
+                "PORT": "8014",
+                "BASE_URL": "http://192.168.1.12:8111",
+                "API_KEY": "Mycobacteri@98"
+            },
+            "image": "ddiu8081/anse:v1.1.11",
+            "internalPort": 8014,
+            "isMain": true
+        }
+    ]
+}
+
