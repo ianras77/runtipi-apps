@@ -1,0 +1,38 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:v0.4.8
+    container_name: open-webui
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      OLLAMA_BASE_URL: ${OPENWEBUI_OLLAMA_URL}
+      OPENAI_API_KEY: ${OPENWEBUI_OPENAI_KEY}
+    ports:
+      - ${APP_PORT}:8080
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/backend/data
+    labels:
+      generated: true
+      traefik.enable: true
+      traefik.http.middlewares.open-webui-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.open-webui.loadbalancer.server.port: "8080"
+      traefik.http.routers.open-webui-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.open-webui-insecure.service: open-webui
+      traefik.http.routers.open-webui-insecure.middlewares: open-webui-web-redirect
+      traefik.http.routers.open-webui.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.open-webui.entrypoints: websecure
+      traefik.http.routers.open-webui.tls.certresolver: myresolver
+      traefik.http.routers.open-webui-local-insecure.rule: Host(`open-webui.${LOCAL_DOMAIN}`)
+      traefik.http.routers.open-webui-local-insecure.entrypoints: web
+      traefik.http.routers.open-webui-local-insecure.service: open-webui
+      traefik.http.routers.open-webui-local-insecure.middlewares: open-webui-web-redirect
+      traefik.http.routers.open-webui-local.rule: Host(`open-webui.${LOCAL_DOMAIN}`)
+      traefik.http.routers.open-webui-local.entrypoints: websecure
+      traefik.http.routers.open-webui-local.service: open-webui
+      traefik.http.routers.open-webui-local.tls: true
+networks:
+  tipi_main_network:
+    name: runtipi_tipi_main_network
+    external: true
+

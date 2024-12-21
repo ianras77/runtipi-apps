@@ -1,0 +1,35 @@
+services:
+  moodist:
+    image: ghcr.io/remvze/moodist:v1.5.1
+    container_name: moodist
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    ports:
+      - ${APP_PORT}:8080
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      generated: true
+      traefik.enable: true
+      traefik.http.middlewares.moodist-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.moodist.loadbalancer.server.port: "8080"
+      traefik.http.routers.moodist-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.moodist-insecure.service: moodist
+      traefik.http.routers.moodist-insecure.middlewares: moodist-web-redirect
+      traefik.http.routers.moodist.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.moodist.entrypoints: websecure
+      traefik.http.routers.moodist.tls.certresolver: myresolver
+      traefik.http.routers.moodist-local-insecure.rule: Host(`moodist.${LOCAL_DOMAIN}`)
+      traefik.http.routers.moodist-local-insecure.entrypoints: web
+      traefik.http.routers.moodist-local-insecure.service: moodist
+      traefik.http.routers.moodist-local-insecure.middlewares: moodist-web-redirect
+      traefik.http.routers.moodist-local.rule: Host(`moodist.${LOCAL_DOMAIN}`)
+      traefik.http.routers.moodist-local.entrypoints: websecure
+      traefik.http.routers.moodist-local.service: moodist
+      traefik.http.routers.moodist-local.tls: true
+networks:
+  tipi_main_network:
+    name: runtipi_tipi_main_network
+    external: true
+

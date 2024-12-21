@@ -1,0 +1,51 @@
+services:
+  bookstack:
+    image: lscr.io/linuxserver/bookstack:24.10.20241104
+    container_name: bookstack
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      TZ: ${TZ}
+      APP_URL: ${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      APP_KEY: base64:${APP_KEY}
+      DB_HOST: bookstack-db
+      DB_USERNAME: tipi
+      DB_PASSWORD: ${BOOKSTACK_DB_PASS}
+      DB_DATABASE: bookstackapp
+    ports:
+      - ${APP_PORT}:80
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/config
+    depends_on:
+      - bookstack-db
+    labels:
+      generated: true
+      traefik.enable: true
+      traefik.http.middlewares.bookstack-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.bookstack.loadbalancer.server.port: "80"
+      traefik.http.routers.bookstack-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.bookstack-insecure.service: bookstack
+      traefik.http.routers.bookstack-insecure.middlewares: bookstack-web-redirect
+      traefik.http.routers.bookstack.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.bookstack.entrypoints: websecure
+      traefik.http.routers.bookstack.tls.certresolver: myresolver
+  bookstack-db:
+    image: lscr.io/linuxserver/mariadb
+    container_name: bookstack-db
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      TZ: ${TZ}
+      MYSQL_ROOT_PASSWORD: ${ROOT_ACCESS_PASSWORD}
+      MYSQL_DATABASE: bookstackapp
+      MYSQL_USER: tipi
+      MYSQL_PASSWORD: ${BOOKSTACK_DB_PASS}
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/config
+networks:
+  tipi_main_network:
+    name: runtipi_tipi_main_network
+    external: true
+

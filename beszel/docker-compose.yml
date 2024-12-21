@@ -1,0 +1,35 @@
+services:
+  beszel:
+    image: henrygd/beszel:0.8.0
+    container_name: beszel
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    ports:
+      - ${APP_PORT}:8090
+    volumes:
+      - ${APP_DATA_DIR}/data:/beszel_data
+    labels:
+      generated: true
+      traefik.enable: true
+      traefik.http.middlewares.beszel-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.beszel.loadbalancer.server.port: "8090"
+      traefik.http.routers.beszel-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.beszel-insecure.service: beszel
+      traefik.http.routers.beszel-insecure.middlewares: beszel-web-redirect
+      traefik.http.routers.beszel.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.beszel.entrypoints: websecure
+      traefik.http.routers.beszel.tls.certresolver: myresolver
+      traefik.http.routers.beszel-local-insecure.rule: Host(`beszel.${LOCAL_DOMAIN}`)
+      traefik.http.routers.beszel-local-insecure.entrypoints: web
+      traefik.http.routers.beszel-local-insecure.service: beszel
+      traefik.http.routers.beszel-local-insecure.middlewares: beszel-web-redirect
+      traefik.http.routers.beszel-local.rule: Host(`beszel.${LOCAL_DOMAIN}`)
+      traefik.http.routers.beszel-local.entrypoints: websecure
+      traefik.http.routers.beszel-local.service: beszel
+      traefik.http.routers.beszel-local.tls: true
+networks:
+  tipi_main_network:
+    name: runtipi_tipi_main_network
+    external: true
+
