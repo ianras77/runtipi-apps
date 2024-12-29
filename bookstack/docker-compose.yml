@@ -1,6 +1,6 @@
 services:
   bookstack:
-    image: lscr.io/linuxserver/bookstack:24.10.20241104
+    image: lscr.io/linuxserver/bookstack:24.12.20241223
     container_name: bookstack
     restart: unless-stopped
     networks:
@@ -25,10 +25,12 @@ services:
       traefik.http.middlewares.bookstack-web-redirect.redirectscheme.scheme: https
       traefik.http.services.bookstack.loadbalancer.server.port: "80"
       traefik.http.routers.bookstack-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.bookstack-insecure.entrypoints: web
       traefik.http.routers.bookstack-insecure.service: bookstack
       traefik.http.routers.bookstack-insecure.middlewares: bookstack-web-redirect
       traefik.http.routers.bookstack.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.bookstack.entrypoints: websecure
+      traefik.http.routers.bookstack.service: bookstack
       traefik.http.routers.bookstack.tls.certresolver: myresolver
   bookstack-db:
     image: lscr.io/linuxserver/mariadb

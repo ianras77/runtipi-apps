@@ -1,6 +1,6 @@
 services:
   ghost:
-    image: ghost:5.104.2
+    image: ghost:5.105.0
     container_name: ghost
     restart: unless-stopped
     networks:

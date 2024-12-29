@@ -1,0 +1,56 @@
+services:
+  wekan:
+    image: ghcr.io/wekan/wekan:v7.74
+    container_name: wekan
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      MONGO_URL: mongodb://wekan-db:27017/wekan
+      ROOT_URL: https://${APP_DOMAIN}
+      MAIL_URL: smtp://${MAIL_ADDRESS}:${MAIL_PASSWORD}@smtp.gmail.com:587
+      MAIL_FROM: Wekan Notifications <noreply.wekan@${APP_DOMAIN}>
+    ports:
+      - ${APP_PORT}:8080
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${APP_DATA_DIR}/data/wekan:/data
+    depends_on:
+      - wekan-db
+    labels:
+      generated: true
+      traefik.enable: true
+      traefik.http.middlewares.wekan-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.wekan.loadbalancer.server.port: "8080"
+      traefik.http.routers.wekan-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.wekan-insecure.entrypoints: web
+      traefik.http.routers.wekan-insecure.service: wekan
+      traefik.http.routers.wekan-insecure.middlewares: wekan-web-redirect
+      traefik.http.routers.wekan.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.wekan.entrypoints: websecure
+      traefik.http.routers.wekan.service: wekan
+      traefik.http.routers.wekan.tls.certresolver: myresolver
+      traefik.http.routers.wekan-local-insecure.rule: Host(`wekan.${LOCAL_DOMAIN}`)
+      traefik.http.routers.wekan-local-insecure.entrypoints: web
+      traefik.http.routers.wekan-local-insecure.service: wekan
+      traefik.http.routers.wekan-local-insecure.middlewares: wekan-web-redirect
+      traefik.http.routers.wekan-local.rule: Host(`wekan.${LOCAL_DOMAIN}`)
+      traefik.http.routers.wekan-local.entrypoints: websecure
+      traefik.http.routers.wekan-local.service: wekan
+      traefik.http.routers.wekan-local.tls: true
+  wekan-db:
+    image: mongo:6
+    command: mongod --logpath /dev/null --oplogSize 128 --quiet
+    container_name: wekan-db
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${APP_DATA_DIR}/data/mongo:/data/db
+      - ${APP_DATA_DIR}/data/dump:/dump
+networks:
+  tipi_main_network:
+    name: runtipi_tipi_main_network
+    external: true
+

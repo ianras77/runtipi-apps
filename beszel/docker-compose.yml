@@ -1,6 +1,6 @@
 services:
   beszel:
-    image: henrygd/beszel:0.8.0
+    image: henrygd/beszel:0.9.0
     container_name: beszel
     restart: unless-stopped
     networks:
@@ -15,10 +15,12 @@ services:
       traefik.http.middlewares.beszel-web-redirect.redirectscheme.scheme: https
       traefik.http.services.beszel.loadbalancer.server.port: "8090"
       traefik.http.routers.beszel-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.beszel-insecure.entrypoints: web
       traefik.http.routers.beszel-insecure.service: beszel
       traefik.http.routers.beszel-insecure.middlewares: beszel-web-redirect
       traefik.http.routers.beszel.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.beszel.entrypoints: websecure
+      traefik.http.routers.beszel.service: beszel
       traefik.http.routers.beszel.tls.certresolver: myresolver
       traefik.http.routers.beszel-local-insecure.rule: Host(`beszel.${LOCAL_DOMAIN}`)
       traefik.http.routers.beszel-local-insecure.entrypoints: web

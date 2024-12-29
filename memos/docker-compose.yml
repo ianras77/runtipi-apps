@@ -1,0 +1,37 @@
+services:
+  memos:
+    image: neosmemo/memos:0.23.0
+    container_name: memos
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    ports:
+      - ${APP_PORT}:5230
+    volumes:
+      - ${APP_DATA_DIR}/memos:/var/opt/memos
+    labels:
+      generated: true
+      traefik.enable: true
+      traefik.http.middlewares.memos-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.memos.loadbalancer.server.port: "5230"
+      traefik.http.routers.memos-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.memos-insecure.entrypoints: web
+      traefik.http.routers.memos-insecure.service: memos
+      traefik.http.routers.memos-insecure.middlewares: memos-web-redirect
+      traefik.http.routers.memos.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.memos.entrypoints: websecure
+      traefik.http.routers.memos.service: memos
+      traefik.http.routers.memos.tls.certresolver: myresolver
+      traefik.http.routers.memos-local-insecure.rule: Host(`memos.${LOCAL_DOMAIN}`)
+      traefik.http.routers.memos-local-insecure.entrypoints: web
+      traefik.http.routers.memos-local-insecure.service: memos
+      traefik.http.routers.memos-local-insecure.middlewares: memos-web-redirect
+      traefik.http.routers.memos-local.rule: Host(`memos.${LOCAL_DOMAIN}`)
+      traefik.http.routers.memos-local.entrypoints: websecure
+      traefik.http.routers.memos-local.service: memos
+      traefik.http.routers.memos-local.tls: true
+networks:
+  tipi_main_network:
+    name: runtipi_tipi_main_network
+    external: true
+

@@ -1,6 +1,6 @@
 services:
   open-webui:
-    image: ghcr.io/open-webui/open-webui:v0.4.8
+    image: ghcr.io/open-webui/open-webui:0.5.1
     container_name: open-webui
     restart: unless-stopped
     networks:
@@ -18,10 +18,12 @@ services:
       traefik.http.middlewares.open-webui-web-redirect.redirectscheme.scheme: https
       traefik.http.services.open-webui.loadbalancer.server.port: "8080"
       traefik.http.routers.open-webui-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.open-webui-insecure.entrypoints: web
       traefik.http.routers.open-webui-insecure.service: open-webui
       traefik.http.routers.open-webui-insecure.middlewares: open-webui-web-redirect
       traefik.http.routers.open-webui.rule: Host(`${APP_DOMAIN}`)
       traefik.http.routers.open-webui.entrypoints: websecure
+      traefik.http.routers.open-webui.service: open-webui
       traefik.http.routers.open-webui.tls.certresolver: myresolver
       traefik.http.routers.open-webui-local-insecure.rule: Host(`open-webui.${LOCAL_DOMAIN}`)
       traefik.http.routers.open-webui-local-insecure.entrypoints: web
