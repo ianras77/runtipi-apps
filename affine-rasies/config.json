@@ -2,11 +2,13 @@
   "name": "AFFiNE for Rasies",
   "id": "affine-rasies",
   "available": true,
-  "short_desc": "AFFiNE is a workspace with fully merged docs, whiteboards, and databases.",
+  "short_desc": "AFFiNE is a workspace with fully merged docs, whiteboards and databases.",
   "author": "https://github.com/toeverything",
   "port": 3010,
-  "categories": ["utilities"],
-  "description": "AFFiNE is a workspace with fully merged docs, whiteboards, and databases. A privacy-focused, local-first, open-source alternative for Notion & Miro.",
+  "categories": [
+    "utilities"
+  ],
+  "description": "AFFiNE is a workspace with fully merged docs, whiteboards and databases.",
   "tipi_version": 1,
   "version": "stable",
   "source": "https://github.com/toeverything/affine",
@@ -17,7 +19,7 @@
       "env_variable": "AFFINE_ADMIN_EMAIL",
       "label": "Admin Email",
       "pattern_error": "Invalid email",
-      "regex": "^[\\w\\-.]+@([\\w-]+\\.)+[\\w-]{2,}$",
+      "regex": "^[\\w\\-\\.]+@([\\w-]+\\.)+[\\w-]{2,}$",
       "required": true,
       "type": "text"
     },
@@ -32,12 +34,6 @@
       "max": 128
     },
     {
-      "env_variable": "AFFINE_POSTGRES_PASSWORD",
-      "label": "Affine Postgres Password",
-      "type": "random",
-      "min": 32
-    },
-    {
       "env_variable": "AFFINE_SMTP_HOST",
       "label": "SMTP Host",
       "required": true,
@@ -50,6 +46,12 @@
       "type": "number",
       "min": 1,
       "max": 65535
+    },
+    {
+      "env_variable": "AFFINE_SMTP_SECURE",
+      "label": "Use Secure Connection (SSL/TLS)",
+      "required": false,
+      "type": "boolean"
     },
     {
       "env_variable": "AFFINE_SMTP_USER",
@@ -70,6 +72,9 @@
       "type": "text"
     }
   ],
-  "supported_architectures": ["arm64", "amd64"]
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ]
 }
 
