@@ -1,6 +1,6 @@
 services:
   grampsweb:
-    image: ghcr.io/gramps-project/grampsweb:v24.12.1
+    image: ghcr.io/gramps-project/grampsweb:v24.12.2
     container_name: grampsweb
     restart: unless-stopped
     networks:

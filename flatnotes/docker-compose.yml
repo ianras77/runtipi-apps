@@ -1,0 +1,43 @@
+services:
+  flatnotes:
+    image: dullage/flatnotes:v5.3.2
+    container_name: flatnotes
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      FLATNOTES_AUTH_TYPE: ${FLATNOTES_AUTH_TYPE}
+      FLATNOTES_USERNAME: ${FLATNOTES_USERNAME}
+      FLATNOTES_PASSWORD: ${FLATNOTES_PASSWORD}
+      FLATNOTES_SECRET_KEY: ${FLATNOTES_SECRET_KEY}
+      FLATNOTES_TOTP_KEY: ${FLATNOTES_TOTP_KEY}
+    ports:
+      - ${APP_PORT}:8080
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    labels:
+      generated: true
+      traefik.enable: true
+      traefik.http.middlewares.flatnotes-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.flatnotes.loadbalancer.server.port: "8080"
+      traefik.http.routers.flatnotes-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.flatnotes-insecure.entrypoints: web
+      traefik.http.routers.flatnotes-insecure.service: flatnotes
+      traefik.http.routers.flatnotes-insecure.middlewares: flatnotes-web-redirect
+      traefik.http.routers.flatnotes.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.flatnotes.entrypoints: websecure
+      traefik.http.routers.flatnotes.service: flatnotes
+      traefik.http.routers.flatnotes.tls.certresolver: myresolver
+      traefik.http.routers.flatnotes-local-insecure.rule: Host(`flatnotes.${LOCAL_DOMAIN}`)
+      traefik.http.routers.flatnotes-local-insecure.entrypoints: web
+      traefik.http.routers.flatnotes-local-insecure.service: flatnotes
+      traefik.http.routers.flatnotes-local-insecure.middlewares: flatnotes-web-redirect
+      traefik.http.routers.flatnotes-local.rule: Host(`flatnotes.${LOCAL_DOMAIN}`)
+      traefik.http.routers.flatnotes-local.entrypoints: websecure
+      traefik.http.routers.flatnotes-local.service: flatnotes
+      traefik.http.routers.flatnotes-local.tls: true
+networks:
+  tipi_main_network:
+    name: runtipi_tipi_main_network
+    external: true
+

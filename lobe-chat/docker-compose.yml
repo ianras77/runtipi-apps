@@ -1,0 +1,40 @@
+services:
+  lobe-chat:
+    image: lobehub/lobe-chat:v1.36.5
+    container_name: lobe-chat
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_PROXY_URL: ${OPEANAI_PROXY_URL}
+      CUSTOM_MODELS: ${CUSTOM_MODELS}
+      ACCESS_CODE: ${ACCESS_CODE}
+    ports:
+      - ${APP_PORT}:3210
+    labels:
+      generated: true
+      traefik.enable: true
+      traefik.http.middlewares.lobe-chat-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.lobe-chat.loadbalancer.server.port: "3210"
+      traefik.http.routers.lobe-chat-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.lobe-chat-insecure.entrypoints: web
+      traefik.http.routers.lobe-chat-insecure.service: lobe-chat
+      traefik.http.routers.lobe-chat-insecure.middlewares: lobe-chat-web-redirect
+      traefik.http.routers.lobe-chat.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.lobe-chat.entrypoints: websecure
+      traefik.http.routers.lobe-chat.service: lobe-chat
+      traefik.http.routers.lobe-chat.tls.certresolver: myresolver
+      traefik.http.routers.lobe-chat-local-insecure.rule: Host(`lobe-chat.${LOCAL_DOMAIN}`)
+      traefik.http.routers.lobe-chat-local-insecure.entrypoints: web
+      traefik.http.routers.lobe-chat-local-insecure.service: lobe-chat
+      traefik.http.routers.lobe-chat-local-insecure.middlewares: lobe-chat-web-redirect
+      traefik.http.routers.lobe-chat-local.rule: Host(`lobe-chat.${LOCAL_DOMAIN}`)
+      traefik.http.routers.lobe-chat-local.entrypoints: websecure
+      traefik.http.routers.lobe-chat-local.service: lobe-chat
+      traefik.http.routers.lobe-chat-local.tls: true
+networks:
+  tipi_main_network:
+    name: runtipi_tipi_main_network
+    external: true
+
