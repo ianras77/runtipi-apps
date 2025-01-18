@@ -2,7 +2,7 @@
   "services": [
     {
       "name": "wekan",
-      "image": "ghcr.io/wekan/wekan:v7.74",
+      "image": "ghcr.io/wekan/wekan:v7.79",
       "isMain": true,
       "internalPort": 8080,
       "environment": {
@@ -44,5 +44,6 @@
       ],
       "command": "mongod --logpath /dev/null --oplogSize 128 --quiet"
     }
-  ]
+  ],
+  "$schema": "../dynamic-compose-schema.json"
 }

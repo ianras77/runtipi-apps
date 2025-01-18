@@ -1,6 +1,6 @@
 services:
   linkwarden:
-    image: ghcr.io/linkwarden/linkwarden:v2.8.4
+    image: ghcr.io/linkwarden/linkwarden:v2.9.0
     container_name: linkwarden
     restart: unless-stopped
     networks:

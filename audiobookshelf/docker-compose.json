@@ -2,13 +2,13 @@
   "services": [
     {
       "name": "audiobookshelf",
-      "image": "ghcr.io/advplyr/audiobookshelf:2.17.5",
+      "image": "ghcr.io/advplyr/audiobookshelf:2.17.7",
       "isMain": true,
       "internalPort": 80,
       "restart": "unless-stopped",
       "volumes": [
         {
-          "hostPath": "${ROOT_FOLDER_HOST}/media/data/audiobooks",
+          "hostPath": "${ROOT_FOLDER_HOST}/media/data/books/spoken",
           "containerPath": "/audiobooks"
         },
         {
@@ -25,5 +25,6 @@
         }
       ]
     }
-  ]
+  ],
+  "$schema": "../dynamic-compose-schema.json"
 }

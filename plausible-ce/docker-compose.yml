@@ -1,0 +1,94 @@
+services:
+  plausible-ce:
+    image: ghcr.io/plausible/community-edition:v2.1.4
+    command: sh -c 'sleep 10 && /entrypoint.sh db createdb && /entrypoint.sh db
+      migrate && /entrypoint.sh run'
+    container_name: plausible-ce
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      BASE_URL: ${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      SECRET_KEY_BASE: ${PLAUSIBLE_SECRET_KEY_BASE}
+      DATABASE_URL: postgres://tipi:${PLAUSIBLE_DB_PASSWORD}@plausible-db:5432/plausible-db
+      CLICKHOUSE_DATABASE_URL: http://plausible-events-db:8123/plausible_events_db
+      DISABLE_REGISTRATION: ${PLAUSIBLE_DISABLE_REGISTRATION:-invite-only}
+      ENABLE_EMAIL_VERIFICATION: ${PLAUSIBLE_ENABLE_EMAIL_VERIFICATION:-false}
+      TOTP_VAULT_KEY: ${PLAUSIBLE_TOTP_VAULT_KEY}
+      GOOGLE_CLIENT_ID: ${PLAUSIBLE_GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${PLAUSIBLE_GOOGLE_CLIENT_SECRET}
+      MAXMIND_LICENSE_KEY: ${PLAUSIBLE_MAXMIND_LICENSE_KEY}
+      MAXMIND_EDITION: ${PLAUSIBLE_MAXMIND_EDITION:-GeoLite2-City}
+      MAILER_ADAPTER: ${PLAUSIBLE_MAILER_ADAPTER:-Bamboo.SMTPAdapter}
+      MAILER_EMAIL: ${PLAUSIBLE_MAILER_EMAIL:-plausible@${APP_DOMAIN}}
+      MAILER_NAME: ${PLAUSIBLE_MAILER_NAME:-Plausible}
+      SMTP_HOST_ADDR: ${PLAUSIBLE_SMTP_HOST_ADDR}
+      SMTP_HOST_PORT: ${PLAUSIBLE_SMTP_HOST_PORT}
+      SMTP_USER_NAME: ${PLAUSIBLE_SMTP_USER_NAME}
+      SMTP_USER_PWD: ${PLAUSIBLE_SMTP_USER_PWD}
+      SMTP_HOST_SSL_ENABLED: ${PLAUSIBLE_SMTP_HOST_SSL_ENABLED:-false}
+      SMTP_RETRIES: ${PLAUSIBLE_SMTP_RETRIES:-2}
+      POSTMARK_API_KEY: ${PLAUSIBLE_POSTMARK_API_KEY}
+      MAILGUN_API_KEY: ${PLAUSIBLE_MAILGUN_API_KEY}
+      MAILGUN_DOMAIN: ${PLAUSIBLE_MAILGUN_DOMAIN}
+      MAILGUN_BASE_URI: ${PLAUSIBLE_MAILGUN_BASE_URI:-https://api.mailgun.net/v3}
+      MANDRILL_API_KEY: ${PLAUSIBLE_MANDRILL_API_KEY}
+      SENDGRID_API_KEY: ${PLAUSIBLE_SENDGRID_API_KEY}
+    ports:
+      - ${APP_PORT}:8000
+    depends_on:
+      - plausible-db
+      - plausible-events-db
+    labels:
+      generated: true
+      traefik.enable: true
+      traefik.http.middlewares.plausible-ce-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.plausible-ce.loadbalancer.server.port: "8000"
+      traefik.http.routers.plausible-ce-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.plausible-ce-insecure.entrypoints: web
+      traefik.http.routers.plausible-ce-insecure.service: plausible-ce
+      traefik.http.routers.plausible-ce-insecure.middlewares: plausible-ce-web-redirect
+      traefik.http.routers.plausible-ce.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.plausible-ce.entrypoints: websecure
+      traefik.http.routers.plausible-ce.service: plausible-ce
+      traefik.http.routers.plausible-ce.tls.certresolver: myresolver
+      traefik.http.routers.plausible-ce-local-insecure.rule: Host(`plausible-ce.${LOCAL_DOMAIN}`)
+      traefik.http.routers.plausible-ce-local-insecure.entrypoints: web
+      traefik.http.routers.plausible-ce-local-insecure.service: plausible-ce
+      traefik.http.routers.plausible-ce-local-insecure.middlewares: plausible-ce-web-redirect
+      traefik.http.routers.plausible-ce-local.rule: Host(`plausible-ce.${LOCAL_DOMAIN}`)
+      traefik.http.routers.plausible-ce-local.entrypoints: websecure
+      traefik.http.routers.plausible-ce-local.service: plausible-ce
+      traefik.http.routers.plausible-ce-local.tls: true
+  plausible-db:
+    image: postgres:16-alpine
+    container_name: plausible-db
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      POSTGRES_DB: plausible-db
+      POSTGRES_USER: tipi
+      POSTGRES_PASSWORD: ${PLAUSIBLE_DB_PASSWORD}
+    volumes:
+      - ${APP_DATA_DIR}/data/database:/var/lib/postgresql/data
+  plausible-events-db:
+    image: clickhouse/clickhouse-server:24.3.3.102-alpine
+    container_name: plausible-events-db
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      POSTGRES_DB: plausible-db
+      POSTGRES_USER: tipi
+      POSTGRES_PASSWORD: ${PLAUSIBLE_DB_PASSWORD}
+    volumes:
+      - ${APP_DATA_DIR}/data/event-data:/var/lib/clickhouse
+      - ${APP_DATA_DIR}/data/event-logs:/var/log/clickhouse-server
+      - ${APP_DATA_DIR}/data/clickhouse/clickhouse-config.xml:/etc/clickhouse-server/config.d/logging.xml:ro
+      - ${APP_DATA_DIR}/data/clickhouse/clickhouse-user-config.xml:/etc/clickhouse-server/users.d/logging.xml:ro
+networks:
+  tipi_main_network:
+    name: runtipi_tipi_main_network
+    external: true
+
