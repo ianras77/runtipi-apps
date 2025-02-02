@@ -1,6 +1,6 @@
 services:
   flatnotes:
-    image: dullage/flatnotes:v5.3.2
+    image: dullage/flatnotes:v5.4.1
     container_name: flatnotes
     restart: unless-stopped
     networks:

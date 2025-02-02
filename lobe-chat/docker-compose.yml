@@ -1,6 +1,6 @@
 services:
   lobe-chat:
-    image: lobehub/lobe-chat:v1.43.4
+    image: lobehub/lobe-chat:v1.47.15
     container_name: lobe-chat
     restart: unless-stopped
     networks:
