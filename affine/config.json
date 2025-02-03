@@ -1,6 +1,6 @@
 {
-  "name": "AFFiNE for RASIES.com",
-  "id": "affine-rasies",
+  "name": "AFFiNE",
+  "id": "affine",
   "available": true,
   "dynamic_config": true,
   "short_desc": "AFFiNE is a workspace with fully merged docs, whiteboards and databases.",

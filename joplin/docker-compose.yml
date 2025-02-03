@@ -32,6 +32,14 @@ services:
       traefik.http.routers.joplin.entrypoints: websecure
       traefik.http.routers.joplin.service: joplin
       traefik.http.routers.joplin.tls.certresolver: myresolver
+      traefik.http.routers.joplin-local-insecure.rule: Host(`joplin.${LOCAL_DOMAIN}`)
+      traefik.http.routers.joplin-local-insecure.entrypoints: web
+      traefik.http.routers.joplin-local-insecure.service: joplin
+      traefik.http.routers.joplin-local-insecure.middlewares: joplin-web-redirect
+      traefik.http.routers.joplin-local.rule: Host(`joplin.${LOCAL_DOMAIN}`)
+      traefik.http.routers.joplin-local.entrypoints: websecure
+      traefik.http.routers.joplin-local.service: joplin
+      traefik.http.routers.joplin-local.tls: true
   db-joplin:
     image: postgres:14.2
     container_name: db-joplin

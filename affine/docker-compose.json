@@ -25,10 +25,7 @@
         "NODE_ENV": "production",
         "AFFINE_ADMIN_EMAIL": "${AFFINE_ADMIN_EMAIL}",
         "AFFINE_ADMIN_PASSWORD": "${AFFINE_ADMIN_PASSWORD}",
-        "TELEMETRY_ENABLE": "${AFFINE_TELEMETRY_ENABLE}",
-        "AFFINE_USE_COPILOT": "true",
-        "AFFINE_COPILOT_BASE_URL": "http://192.168.1.12:8080/v1",
-        "AFFINE_COPILOT_MODEL": "deepseek-r1-distill-llama-8b"
+        "TELEMETRY_ENABLE": "${AFFINE_TELEMETRY_ENABLE}"
       },
       "dependsOn": {
         "affine-redis": {
@@ -43,8 +40,7 @@
         "options": {
           "max-size": "1000m"
         }
-      },
-      "restart": "unless-stopped"
+      }
     },
     {
       "image": "redis",
@@ -56,12 +52,11 @@
         }
       ],
       "healthCheck": {
-        "test": ["CMD", "redis-cli", "ping"],
+        "test": "redis-cli --raw incr ping",
         "interval": "10s",
         "timeout": "5s",
         "retries": 5
-      },
-      "restart": "unless-stopped"
+      }
     },
     {
       "image": "postgres:16",
@@ -69,12 +64,11 @@
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/postgres",
-          "containerPath": "/var/lib/postgresql/data",
-          "type": "volume"
+          "containerPath": "/var/lib/postgresql/data"
         }
       ],
       "healthCheck": {
-        "test": ["CMD", "pg_isready", "-U", "tipi", "-d", "affine"],
+        "test": "pg_isready -d postgres://tipi:${AFFINE_POSTGRES_PASSWORD}@affine-postgres:5432/affine",
         "interval": "10s",
         "timeout": "5s",
         "retries": 5
@@ -83,9 +77,7 @@
         "POSTGRES_USER": "tipi",
         "POSTGRES_PASSWORD": "${AFFINE_POSTGRES_PASSWORD}",
         "POSTGRES_DB": "affine"
-      },
-      "restart": "unless-stopped"
+      }
     }
   ]
 }
-
