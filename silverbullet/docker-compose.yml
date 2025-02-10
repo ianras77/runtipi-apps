@@ -1,0 +1,40 @@
+services:
+  silverbullet:
+    image: zefhemel/silverbullet:0.10.1
+    container_name: silverbullet
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    environment:
+      SB_USER: ${SB_USER}:${SB_PASSWORD}
+    ports:
+      - ${APP_PORT}:3000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${APP_DATA_DIR}/space:/space
+    labels:
+      generated: true
+      traefik.enable: true
+      traefik.http.middlewares.silverbullet-web-redirect.redirectscheme.scheme: https
+      traefik.http.services.silverbullet.loadbalancer.server.port: "3000"
+      traefik.http.routers.silverbullet-insecure.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.silverbullet-insecure.entrypoints: web
+      traefik.http.routers.silverbullet-insecure.service: silverbullet
+      traefik.http.routers.silverbullet-insecure.middlewares: silverbullet-web-redirect
+      traefik.http.routers.silverbullet.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.silverbullet.entrypoints: websecure
+      traefik.http.routers.silverbullet.service: silverbullet
+      traefik.http.routers.silverbullet.tls.certresolver: myresolver
+      traefik.http.routers.silverbullet-local-insecure.rule: Host(`silverbullet.${LOCAL_DOMAIN}`)
+      traefik.http.routers.silverbullet-local-insecure.entrypoints: web
+      traefik.http.routers.silverbullet-local-insecure.service: silverbullet
+      traefik.http.routers.silverbullet-local-insecure.middlewares: silverbullet-web-redirect
+      traefik.http.routers.silverbullet-local.rule: Host(`silverbullet.${LOCAL_DOMAIN}`)
+      traefik.http.routers.silverbullet-local.entrypoints: websecure
+      traefik.http.routers.silverbullet-local.service: silverbullet
+      traefik.http.routers.silverbullet-local.tls: true
+networks:
+  tipi_main_network:
+    name: runtipi_tipi_main_network
+    external: true
+
