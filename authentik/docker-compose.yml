@@ -1,6 +1,6 @@
 services:
   authentik:
-    image: ghcr.io/goauthentik/server:2024.12.2
+    image: ghcr.io/goauthentik/server:2024.12.3
     command: server
     container_name: authentik
     restart: unless-stopped

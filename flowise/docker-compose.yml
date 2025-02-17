@@ -1,6 +1,6 @@
 services:
   flowise:
-    image: flowiseai/flowise:2.2.4
+    image: flowiseai/flowise:2.2.5
     container_name: flowise
     restart: unless-stopped
     networks:

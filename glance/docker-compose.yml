@@ -1,6 +1,6 @@
 services:
   glance:
-    image: glanceapp/glance:v0.6.4
+    image: glanceapp/glance:v0.7.2
     container_name: glance
     restart: unless-stopped
     networks:
@@ -8,7 +8,7 @@ services:
     ports:
       - ${APP_PORT}:8080
     volumes:
-      - ${APP_DATA_DIR}/data/glance.yml:/app/glance.yml
+      - ${APP_DATA_DIR}/data/:/app/config/
     labels:
       generated: true
       traefik.enable: true

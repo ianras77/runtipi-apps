@@ -2,12 +2,12 @@
   "services": [
     {
       "name": "audiobookshelf",
-      "image": "ghcr.io/advplyr/audiobookshelf:2.18.1",
+      "image": "ghcr.io/advplyr/audiobookshelf:2.19.2",
       "isMain": true,
       "internalPort": 80,
       "volumes": [
         {
-          "hostPath": "${ROOT_FOLDER_HOST}/media/data/audiobooks",
+          "hostPath": "${ROOT_FOLDER_HOST}/media/data/books/spoken",
           "containerPath": "/audiobooks"
         },
         {
