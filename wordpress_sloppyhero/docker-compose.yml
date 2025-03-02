@@ -21,28 +21,28 @@ services:
     labels:
         # Main
         traefik.enable: true
-        traefik.http.middlewares.wordpress_sloppyhero-redirect.redirectscheme.scheme: https
-        traefik.http.services.wordpress_sloppyhero.loadbalancer.server.port: 80
+        traefik.http.middlewares.wordpress-sloppyhero-redirect.redirectscheme.scheme: https
+        traefik.http.services.wordpress-sloppyhero.loadbalancer.server.port: 80
         # Web
-        traefik.http.routers.wordpress_sloppyhero-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_sloppyhero-insecure.entrypoints: web
-        traefik.http.routers.wordpress_sloppyhero-insecure.service: wordpress_sloppyhero
-        traefik.http.routers.wordpress_sloppyhero-insecure.middlewares: wordpress_sloppyhero-redirect
+        traefik.http.routers.wordpress-sloppyhero-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-sloppyhero-insecure.entrypoints: web
+        traefik.http.routers.wordpress-sloppyhero-insecure.service: wordpress-sloppyhero
+        traefik.http.routers.wordpress-sloppyhero-insecure.middlewares: wordpress-sloppyhero-redirect
         # Websecure
-        traefik.http.routers.wordpress_sloppyhero.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_sloppyhero.entrypoints: websecure
-        traefik.http.routers.wordpress_sloppyhero.service: wordpress_sloppyhero
-        traefik.http.routers.wordpress_sloppyhero.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-sloppyhero.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-sloppyhero.entrypoints: websecure
+        traefik.http.routers.wordpress-sloppyhero.service: wordpress-sloppyhero
+        traefik.http.routers.wordpress-sloppyhero.tls.certresolver: myresolver
         # Local domain
-        traefik.http.routers.wordpress_sloppyhero-local-insecure.rule: Host(`wordpress_sloppyhero.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_sloppyhero-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_sloppyhero-local-insecure.service: wordpress_sloppyhero
-        traefik.http.routers.wordpress_sloppyhero-local-insecure.middlewares: wordpress_sloppyhero-redirect
+        traefik.http.routers.wordpress-sloppyhero-local-insecure.rule: Host(`wordpress-sloppyhero.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-sloppyhero-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-sloppyhero-local-insecure.service: wordpress-sloppyhero
+        traefik.http.routers.wordpress-sloppyhero-local-insecure.middlewares: wordpress-sloppyhero-redirect
         # Local domain secure
-        traefik.http.routers.wordpress_sloppyhero-local.rule: Host(`wordpress_sloppyhero.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_sloppyhero-local.entrypoints: websecure
-        traefik.http.routers.wordpress_sloppyhero-local.service: wordpress_sloppyhero
-        traefik.http.routers.wordpress_sloppyhero-local.tls: true
+        traefik.http.routers.wordpress-sloppyhero-local.rule: Host(`wordpress-sloppyhero.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-sloppyhero-local.entrypoints: websecure
+        traefik.http.routers.wordpress-sloppyhero-local.service: wordpress-sloppyhero
+        traefik.http.routers.wordpress-sloppyhero-local.tls: true
         runtipi.managed: true
   wordpress_sloppyhero-db:
     container_name: wordpress_sloppyhero-db

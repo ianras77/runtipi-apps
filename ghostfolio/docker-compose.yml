@@ -1,6 +1,6 @@
 services:
   ghostfolio:
-    image: ghostfolio/ghostfolio:2.139.1
+    image: ghostfolio/ghostfolio:2.141.0
     container_name: ghostfolio
     restart: unless-stopped
     networks:

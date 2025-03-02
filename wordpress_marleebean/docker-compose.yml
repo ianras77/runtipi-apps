@@ -21,28 +21,28 @@ services:
     labels:
         # Main
         traefik.enable: true
-        traefik.http.middlewares.wordpress_marleebean-redirect.redirectscheme.scheme: https
-        traefik.http.services.wordpress_marleebean.loadbalancer.server.port: 80
+        traefik.http.middlewares.wordpress-marleebean-redirect.redirectscheme.scheme: https
+        traefik.http.services.wordpress-marleebean.loadbalancer.server.port: 80
         # Web
-        traefik.http.routers.wordpress_marleebean-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_marleebean-insecure.entrypoints: web
-        traefik.http.routers.wordpress_marleebean-insecure.service: wordpress_marleebean
-        traefik.http.routers.wordpress_marleebean-insecure.middlewares: wordpress_marleebean-redirect
+        traefik.http.routers.wordpress-marleebean-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-marleebean-insecure.entrypoints: web
+        traefik.http.routers.wordpress-marleebean-insecure.service: wordpress-marleebean
+        traefik.http.routers.wordpress-marleebean-insecure.middlewares: wordpress-marleebean-redirect
         # Websecure
-        traefik.http.routers.wordpress_marleebean.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_marleebean.entrypoints: websecure
-        traefik.http.routers.wordpress_marleebean.service: wordpress_marleebean
-        traefik.http.routers.wordpress_marleebean.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-marleebean.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-marleebean.entrypoints: websecure
+        traefik.http.routers.wordpress-marleebean.service: wordpress-marleebean
+        traefik.http.routers.wordpress-marleebean.tls.certresolver: myresolver
         # Local domain
-        traefik.http.routers.wordpress_marleebean-local-insecure.rule: Host(`wordpress_marleebean.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_marleebean-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_marleebean-local-insecure.service: wordpress_marleebean
-        traefik.http.routers.wordpress_marleebean-local-insecure.middlewares: wordpress_marleebean-redirect
+        traefik.http.routers.wordpress-marleebean-local-insecure.rule: Host(`wordpress-marleebean.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-marleebean-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-marleebean-local-insecure.service: wordpress-marleebean
+        traefik.http.routers.wordpress-marleebean-local-insecure.middlewares: wordpress-marleebean-redirect
         # Local domain secure
-        traefik.http.routers.wordpress_marleebean-local.rule: Host(`wordpress_marleebean.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_marleebean-local.entrypoints: websecure
-        traefik.http.routers.wordpress_marleebean-local.service: wordpress_marleebean
-        traefik.http.routers.wordpress_marleebean-local.tls: true
+        traefik.http.routers.wordpress-marleebean-local.rule: Host(`wordpress-marleebean.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-marleebean-local.entrypoints: websecure
+        traefik.http.routers.wordpress-marleebean-local.service: wordpress-marleebean
+        traefik.http.routers.wordpress-marleebean-local.tls: true
         runtipi.managed: true
   wordpress_marleebean-db:
     container_name: wordpress_marleebean-db

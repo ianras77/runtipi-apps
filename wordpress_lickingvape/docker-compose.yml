@@ -21,28 +21,28 @@ services:
     labels:
         # Main
         traefik.enable: true
-        traefik.http.middlewares.wordpress_lickingvape-redirect.redirectscheme.scheme: https
-        traefik.http.services.wordpress_lickingvape.loadbalancer.server.port: 80
+        traefik.http.middlewares.wordpress-lickingvape-redirect.redirectscheme.scheme: https
+        traefik.http.services.wordpress-lickingvape.loadbalancer.server.port: 80
         # Web
-        traefik.http.routers.wordpress_lickingvape-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_lickingvape-insecure.entrypoints: web
-        traefik.http.routers.wordpress_lickingvape-insecure.service: wordpress_lickingvape
-        traefik.http.routers.wordpress_lickingvape-insecure.middlewares: wordpress_lickingvape-redirect
+        traefik.http.routers.wordpress-lickingvape-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-lickingvape-insecure.entrypoints: web
+        traefik.http.routers.wordpress-lickingvape-insecure.service: wordpress-lickingvape
+        traefik.http.routers.wordpress-lickingvape-insecure.middlewares: wordpress-lickingvape-redirect
         # Websecure
-        traefik.http.routers.wordpress_lickingvape.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_lickingvape.entrypoints: websecure
-        traefik.http.routers.wordpress_lickingvape.service: wordpress_lickingvape
-        traefik.http.routers.wordpress_lickingvape.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-lickingvape.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-lickingvape.entrypoints: websecure
+        traefik.http.routers.wordpress-lickingvape.service: wordpress-lickingvape
+        traefik.http.routers.wordpress-lickingvape.tls.certresolver: myresolver
         # Local domain
-        traefik.http.routers.wordpress_lickingvape-local-insecure.rule: Host(`wordpress_lickingvape.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_lickingvape-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_lickingvape-local-insecure.service: wordpress_lickingvape
-        traefik.http.routers.wordpress_lickingvape-local-insecure.middlewares: wordpress_lickingvape-redirect
+        traefik.http.routers.wordpress-lickingvape-local-insecure.rule: Host(`wordpress-lickingvape.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-lickingvape-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-lickingvape-local-insecure.service: wordpress-lickingvape
+        traefik.http.routers.wordpress-lickingvape-local-insecure.middlewares: wordpress-lickingvape-redirect
         # Local domain secure
-        traefik.http.routers.wordpress_lickingvape-local.rule: Host(`wordpress_lickingvape.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_lickingvape-local.entrypoints: websecure
-        traefik.http.routers.wordpress_lickingvape-local.service: wordpress_lickingvape
-        traefik.http.routers.wordpress_lickingvape-local.tls: true
+        traefik.http.routers.wordpress-lickingvape-local.rule: Host(`wordpress-lickingvape.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-lickingvape-local.entrypoints: websecure
+        traefik.http.routers.wordpress-lickingvape-local.service: wordpress-lickingvape
+        traefik.http.routers.wordpress-lickingvape-local.tls: true
         runtipi.managed: true
   wordpress_lickingvape-db:
     container_name: wordpress_lickingvape-db

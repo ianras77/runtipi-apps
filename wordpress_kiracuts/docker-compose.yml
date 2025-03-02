@@ -21,28 +21,28 @@ services:
     labels:
         # Main
         traefik.enable: true
-        traefik.http.middlewares.wordpress_kiracuts-redirect.redirectscheme.scheme: https
-        traefik.http.services.wordpress_kiracuts.loadbalancer.server.port: 80
+        traefik.http.middlewares.wordpress-kiracuts-redirect.redirectscheme.scheme: https
+        traefik.http.services.wordpress-kiracuts.loadbalancer.server.port: 80
         # Web
-        traefik.http.routers.wordpress_kiracuts-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_kiracuts-insecure.entrypoints: web
-        traefik.http.routers.wordpress_kiracuts-insecure.service: wordpress_kiracuts
-        traefik.http.routers.wordpress_kiracuts-insecure.middlewares: wordpress_kiracuts-redirect
+        traefik.http.routers.wordpress-kiracuts-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-kiracuts-insecure.entrypoints: web
+        traefik.http.routers.wordpress-kiracuts-insecure.service: wordpress-kiracuts
+        traefik.http.routers.wordpress-kiracuts-insecure.middlewares: wordpress-kiracuts-redirect
         # Websecure
-        traefik.http.routers.wordpress_kiracuts.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_kiracuts.entrypoints: websecure
-        traefik.http.routers.wordpress_kiracuts.service: wordpress_kiracuts
-        traefik.http.routers.wordpress_kiracuts.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-kiracuts.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-kiracuts.entrypoints: websecure
+        traefik.http.routers.wordpress-kiracuts.service: wordpress-kiracuts
+        traefik.http.routers.wordpress-kiracuts.tls.certresolver: myresolver
         # Local domain
-        traefik.http.routers.wordpress_kiracuts-local-insecure.rule: Host(`wordpress_kiracuts.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_kiracuts-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_kiracuts-local-insecure.service: wordpress_kiracuts
-        traefik.http.routers.wordpress_kiracuts-local-insecure.middlewares: wordpress_kiracuts-redirect
+        traefik.http.routers.wordpress-kiracuts-local-insecure.rule: Host(`wordpress-kiracuts.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-kiracuts-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-kiracuts-local-insecure.service: wordpress-kiracuts
+        traefik.http.routers.wordpress-kiracuts-local-insecure.middlewares: wordpress-kiracuts-redirect
         # Local domain secure
-        traefik.http.routers.wordpress_kiracuts-local.rule: Host(`wordpress_kiracuts.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_kiracuts-local.entrypoints: websecure
-        traefik.http.routers.wordpress_kiracuts-local.service: wordpress_kiracuts
-        traefik.http.routers.wordpress_kiracuts-local.tls: true
+        traefik.http.routers.wordpress-kiracuts-local.rule: Host(`wordpress-kiracuts.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-kiracuts-local.entrypoints: websecure
+        traefik.http.routers.wordpress-kiracuts-local.service: wordpress-kiracuts
+        traefik.http.routers.wordpress-kiracuts-local.tls: true
         runtipi.managed: true
   wordpress_kiracuts-db:
     container_name: wordpress_kiracuts-db

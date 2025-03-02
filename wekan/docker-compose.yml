@@ -1,6 +1,6 @@
 services:
   wekan:
-    image: ghcr.io/wekan/wekan:v7.81
+    image: ghcr.io/wekan/wekan:v7.82
     container_name: wekan
     restart: unless-stopped
     networks:

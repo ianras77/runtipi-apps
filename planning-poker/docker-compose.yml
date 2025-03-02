@@ -28,6 +28,14 @@ services:
       traefik.http.routers.planning-poker.entrypoints: websecure
       traefik.http.routers.planning-poker.service: planning-poker
       traefik.http.routers.planning-poker.tls.certresolver: myresolver
+      traefik.http.routers.planning-poker-local-insecure.rule: Host(`planning-poker.${LOCAL_DOMAIN}`)
+      traefik.http.routers.planning-poker-local-insecure.entrypoints: web
+      traefik.http.routers.planning-poker-local-insecure.service: planning-poker
+      traefik.http.routers.planning-poker-local-insecure.middlewares: planning-poker-web-redirect
+      traefik.http.routers.planning-poker-local.rule: Host(`planning-poker.${LOCAL_DOMAIN}`)
+      traefik.http.routers.planning-poker-local.entrypoints: websecure
+      traefik.http.routers.planning-poker-local.service: planning-poker
+      traefik.http.routers.planning-poker-local.tls: true
 networks:
   tipi_main_network:
     name: runtipi_tipi_main_network

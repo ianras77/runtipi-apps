@@ -21,28 +21,28 @@ services:
     labels:
         # Main
         traefik.enable: true
-        traefik.http.middlewares.wordpress_hometownheartstrings-redirect.redirectscheme.scheme: https
-        traefik.http.services.wordpress_hometownheartstrings.loadbalancer.server.port: 80
+        traefik.http.middlewares.wordpress-hometownheartstrings-redirect.redirectscheme.scheme: https
+        traefik.http.services.wordpress-hometownheartstrings.loadbalancer.server.port: 80
         # Web
-        traefik.http.routers.wordpress_hometownheartstrings-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_hometownheartstrings-insecure.entrypoints: web
-        traefik.http.routers.wordpress_hometownheartstrings-insecure.service: wordpress_hometownheartstrings
-        traefik.http.routers.wordpress_hometownheartstrings-insecure.middlewares: wordpress_hometownheartstrings-redirect
+        traefik.http.routers.wordpress-hometownheartstrings-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-hometownheartstrings-insecure.entrypoints: web
+        traefik.http.routers.wordpress-hometownheartstrings-insecure.service: wordpress-hometownheartstrings
+        traefik.http.routers.wordpress-hometownheartstrings-insecure.middlewares: wordpress-hometownheartstrings-redirect
         # Websecure
-        traefik.http.routers.wordpress_hometownheartstrings.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_hometownheartstrings.entrypoints: websecure
-        traefik.http.routers.wordpress_hometownheartstrings.service: wordpress_hometownheartstrings
-        traefik.http.routers.wordpress_hometownheartstrings.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-hometownheartstrings.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-hometownheartstrings.entrypoints: websecure
+        traefik.http.routers.wordpress-hometownheartstrings.service: wordpress-hometownheartstrings
+        traefik.http.routers.wordpress-hometownheartstrings.tls.certresolver: myresolver
         # Local domain
-        traefik.http.routers.wordpress_hometownheartstrings-local-insecure.rule: Host(`wordpress_hometownheartstrings.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_hometownheartstrings-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_hometownheartstrings-local-insecure.service: wordpress_hometownheartstrings
-        traefik.http.routers.wordpress_hometownheartstrings-local-insecure.middlewares: wordpress_hometownheartstrings-redirect
+        traefik.http.routers.wordpress-hometownheartstrings-local-insecure.rule: Host(`wordpress-hometownheartstrings.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-hometownheartstrings-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-hometownheartstrings-local-insecure.service: wordpress-hometownheartstrings
+        traefik.http.routers.wordpress-hometownheartstrings-local-insecure.middlewares: wordpress-hometownheartstrings-redirect
         # Local domain secure
-        traefik.http.routers.wordpress_hometownheartstrings-local.rule: Host(`wordpress_hometownheartstrings.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_hometownheartstrings-local.entrypoints: websecure
-        traefik.http.routers.wordpress_hometownheartstrings-local.service: wordpress_hometownheartstrings
-        traefik.http.routers.wordpress_hometownheartstrings-local.tls: true
+        traefik.http.routers.wordpress-hometownheartstrings-local.rule: Host(`wordpress-hometownheartstrings.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-hometownheartstrings-local.entrypoints: websecure
+        traefik.http.routers.wordpress-hometownheartstrings-local.service: wordpress-hometownheartstrings
+        traefik.http.routers.wordpress-hometownheartstrings-local.tls: true
         runtipi.managed: true
   wordpress_hometownheartstrings-db:
     container_name: wordpress_hometownheartstrings-db

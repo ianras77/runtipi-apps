@@ -21,28 +21,28 @@ services:
     labels:
         # Main
         traefik.enable: true
-        traefik.http.middlewares.wordpress_visionarytalentkids-redirect.redirectscheme.scheme: https
-        traefik.http.services.wordpress_visionarytalentkids.loadbalancer.server.port: 80
+        traefik.http.middlewares.wordpress-visionarytalentkids-redirect.redirectscheme.scheme: https
+        traefik.http.services.wordpress-visionarytalentkids.loadbalancer.server.port: 80
         # Web
-        traefik.http.routers.wordpress_visionarytalentkids-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_visionarytalentkids-insecure.entrypoints: web
-        traefik.http.routers.wordpress_visionarytalentkids-insecure.service: wordpress_visionarytalentkids
-        traefik.http.routers.wordpress_visionarytalentkids-insecure.middlewares: wordpress_visionarytalentkids-redirect
+        traefik.http.routers.wordpress-visionarytalentkids-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-visionarytalentkids-insecure.entrypoints: web
+        traefik.http.routers.wordpress-visionarytalentkids-insecure.service: wordpress-visionarytalentkids
+        traefik.http.routers.wordpress-visionarytalentkids-insecure.middlewares: wordpress-visionarytalentkids-redirect
         # Websecure
-        traefik.http.routers.wordpress_visionarytalentkids.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_visionarytalentkids.entrypoints: websecure
-        traefik.http.routers.wordpress_visionarytalentkids.service: wordpress_visionarytalentkids
-        traefik.http.routers.wordpress_visionarytalentkids.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-visionarytalentkids.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-visionarytalentkids.entrypoints: websecure
+        traefik.http.routers.wordpress-visionarytalentkids.service: wordpress-visionarytalentkids
+        traefik.http.routers.wordpress-visionarytalentkids.tls.certresolver: myresolver
         # Local domain
-        traefik.http.routers.wordpress_visionarytalentkids-local-insecure.rule: Host(`wordpress_visionarytalentkids.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_visionarytalentkids-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_visionarytalentkids-local-insecure.service: wordpress_visionarytalentkids
-        traefik.http.routers.wordpress_visionarytalentkids-local-insecure.middlewares: wordpress_visionarytalentkids-redirect
+        traefik.http.routers.wordpress-visionarytalentkids-local-insecure.rule: Host(`wordpress-visionarytalentkids.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-visionarytalentkids-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-visionarytalentkids-local-insecure.service: wordpress-visionarytalentkids
+        traefik.http.routers.wordpress-visionarytalentkids-local-insecure.middlewares: wordpress-visionarytalentkids-redirect
         # Local domain secure
-        traefik.http.routers.wordpress_visionarytalentkids-local.rule: Host(`wordpress_visionarytalentkids.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_visionarytalentkids-local.entrypoints: websecure
-        traefik.http.routers.wordpress_visionarytalentkids-local.service: wordpress_visionarytalentkids
-        traefik.http.routers.wordpress_visionarytalentkids-local.tls: true
+        traefik.http.routers.wordpress-visionarytalentkids-local.rule: Host(`wordpress-visionarytalentkids.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-visionarytalentkids-local.entrypoints: websecure
+        traefik.http.routers.wordpress-visionarytalentkids-local.service: wordpress-visionarytalentkids
+        traefik.http.routers.wordpress-visionarytalentkids-local.tls: true
         runtipi.managed: true
   wordpress_visionarytalentkids-db:
     container_name: wordpress_visionarytalentkids-db

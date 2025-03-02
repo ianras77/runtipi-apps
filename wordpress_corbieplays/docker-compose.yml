@@ -21,28 +21,28 @@ services:
     labels:
         # Main
         traefik.enable: true
-        traefik.http.middlewares.wordpress_corbieplays-redirect.redirectscheme.scheme: https
-        traefik.http.services.wordpress_corbieplays.loadbalancer.server.port: 80
+        traefik.http.middlewares.wordpress-corbieplays-redirect.redirectscheme.scheme: https
+        traefik.http.services.wordpress-corbieplays.loadbalancer.server.port: 80
         # Web
-        traefik.http.routers.wordpress_corbieplays-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_corbieplays-insecure.entrypoints: web
-        traefik.http.routers.wordpress_corbieplays-insecure.service: wordpress_corbieplays
-        traefik.http.routers.wordpress_corbieplays-insecure.middlewares: wordpress_corbieplays-redirect
+        traefik.http.routers.wordpress-corbieplays-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-corbieplays-insecure.entrypoints: web
+        traefik.http.routers.wordpress-corbieplays-insecure.service: wordpress-corbieplays
+        traefik.http.routers.wordpress-corbieplays-insecure.middlewares: wordpress-corbieplays-redirect
         # Websecure
-        traefik.http.routers.wordpress_corbieplays.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_corbieplays.entrypoints: websecure
-        traefik.http.routers.wordpress_corbieplays.service: wordpress_corbieplays
-        traefik.http.routers.wordpress_corbieplays.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-corbieplays.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-corbieplays.entrypoints: websecure
+        traefik.http.routers.wordpress-corbieplays.service: wordpress-corbieplays
+        traefik.http.routers.wordpress-corbieplays.tls.certresolver: myresolver
         # Local domain
-        traefik.http.routers.wordpress_corbieplays-local-insecure.rule: Host(`wordpress_corbieplays.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_corbieplays-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_corbieplays-local-insecure.service: wordpress_corbieplays
-        traefik.http.routers.wordpress_corbieplays-local-insecure.middlewares: wordpress_corbieplays-redirect
+        traefik.http.routers.wordpress-corbieplays-local-insecure.rule: Host(`wordpress-corbieplays.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-corbieplays-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-corbieplays-local-insecure.service: wordpress-corbieplays
+        traefik.http.routers.wordpress-corbieplays-local-insecure.middlewares: wordpress-corbieplays-redirect
         # Local domain secure
-        traefik.http.routers.wordpress_corbieplays-local.rule: Host(`wordpress_corbieplays.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_corbieplays-local.entrypoints: websecure
-        traefik.http.routers.wordpress_corbieplays-local.service: wordpress_corbieplays
-        traefik.http.routers.wordpress_corbieplays-local.tls: true
+        traefik.http.routers.wordpress-corbieplays-local.rule: Host(`wordpress-corbieplays.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-corbieplays-local.entrypoints: websecure
+        traefik.http.routers.wordpress-corbieplays-local.service: wordpress-corbieplays
+        traefik.http.routers.wordpress-corbieplays-local.tls: true
         runtipi.managed: true
   wordpress_corbieplays-db:
     container_name: wordpress_corbieplays-db

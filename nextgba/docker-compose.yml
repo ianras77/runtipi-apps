@@ -1,6 +1,6 @@
 services:
   nextgba:
-    image: ghcr.io/meienberger/nextgba:v0.1.0
+    image: ghcr.io/nicotsx/nextgba:v0.1.0
     container_name: nextgba
     restart: unless-stopped
     networks:

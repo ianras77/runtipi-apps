@@ -21,28 +21,28 @@ services:
     labels:
         # Main
         traefik.enable: true
-        traefik.http.middlewares.wordpress_desirearts-redirect.redirectscheme.scheme: https
-        traefik.http.services.wordpress_desirearts.loadbalancer.server.port: 80
+        traefik.http.middlewares.wordpress-desirearts-redirect.redirectscheme.scheme: https
+        traefik.http.services.wordpress-desirearts.loadbalancer.server.port: 80
         # Web
-        traefik.http.routers.wordpress_desirearts-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_desirearts-insecure.entrypoints: web
-        traefik.http.routers.wordpress_desirearts-insecure.service: wordpress_desirearts
-        traefik.http.routers.wordpress_desirearts-insecure.middlewares: wordpress_desirearts-redirect
+        traefik.http.routers.wordpress-desirearts-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-desirearts-insecure.entrypoints: web
+        traefik.http.routers.wordpress-desirearts-insecure.service: wordpress-desirearts
+        traefik.http.routers.wordpress-desirearts-insecure.middlewares: wordpress-desirearts-redirect
         # Websecure
-        traefik.http.routers.wordpress_desirearts.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_desirearts.entrypoints: websecure
-        traefik.http.routers.wordpress_desirearts.service: wordpress_desirearts
-        traefik.http.routers.wordpress_desirearts.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-desirearts.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-desirearts.entrypoints: websecure
+        traefik.http.routers.wordpress-desirearts.service: wordpress-desirearts
+        traefik.http.routers.wordpress-desirearts.tls.certresolver: myresolver
         # Local domain
-        traefik.http.routers.wordpress_desirearts-local-insecure.rule: Host(`wordpress_desirearts.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_desirearts-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_desirearts-local-insecure.service: wordpress_desirearts
-        traefik.http.routers.wordpress_desirearts-local-insecure.middlewares: wordpress_desirearts-redirect
+        traefik.http.routers.wordpress-desirearts-local-insecure.rule: Host(`wordpress-desirearts.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-desirearts-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-desirearts-local-insecure.service: wordpress-desirearts
+        traefik.http.routers.wordpress-desirearts-local-insecure.middlewares: wordpress-desirearts-redirect
         # Local domain secure
-        traefik.http.routers.wordpress_desirearts-local.rule: Host(`wordpress_desirearts.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_desirearts-local.entrypoints: websecure
-        traefik.http.routers.wordpress_desirearts-local.service: wordpress_desirearts
-        traefik.http.routers.wordpress_desirearts-local.tls: true
+        traefik.http.routers.wordpress-desirearts-local.rule: Host(`wordpress-desirearts.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-desirearts-local.entrypoints: websecure
+        traefik.http.routers.wordpress-desirearts-local.service: wordpress-desirearts
+        traefik.http.routers.wordpress-desirearts-local.tls: true
         runtipi.managed: true
   wordpress_desirearts-db:
     container_name: wordpress_desirearts-db

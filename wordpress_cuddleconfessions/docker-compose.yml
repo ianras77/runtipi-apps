@@ -21,28 +21,28 @@ services:
     labels:
         # Main
         traefik.enable: true
-        traefik.http.middlewares.wordpress_cuddleconfessions-redirect.redirectscheme.scheme: https
-        traefik.http.services.wordpress_cuddleconfessions.loadbalancer.server.port: 80
+        traefik.http.middlewares.wordpress-cuddleconfessions-redirect.redirectscheme.scheme: https
+        traefik.http.services.wordpress-cuddleconfessions.loadbalancer.server.port: 80
         # Web
-        traefik.http.routers.wordpress_cuddleconfessions-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_cuddleconfessions-insecure.entrypoints: web
-        traefik.http.routers.wordpress_cuddleconfessions-insecure.service: wordpress_cuddleconfessions
-        traefik.http.routers.wordpress_cuddleconfessions-insecure.middlewares: wordpress_cuddleconfessions-redirect
+        traefik.http.routers.wordpress-cuddleconfessions-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-cuddleconfessions-insecure.entrypoints: web
+        traefik.http.routers.wordpress-cuddleconfessions-insecure.service: wordpress-cuddleconfessions
+        traefik.http.routers.wordpress-cuddleconfessions-insecure.middlewares: wordpress-cuddleconfessions-redirect
         # Websecure
-        traefik.http.routers.wordpress_cuddleconfessions.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_cuddleconfessions.entrypoints: websecure
-        traefik.http.routers.wordpress_cuddleconfessions.service: wordpress_cuddleconfessions
-        traefik.http.routers.wordpress_cuddleconfessions.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-cuddleconfessions.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-cuddleconfessions.entrypoints: websecure
+        traefik.http.routers.wordpress-cuddleconfessions.service: wordpress-cuddleconfessions
+        traefik.http.routers.wordpress-cuddleconfessions.tls.certresolver: myresolver
         # Local domain
-        traefik.http.routers.wordpress_cuddleconfessions-local-insecure.rule: Host(`wordpress_cuddleconfessions.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_cuddleconfessions-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_cuddleconfessions-local-insecure.service: wordpress_cuddleconfessions
-        traefik.http.routers.wordpress_cuddleconfessions-local-insecure.middlewares: wordpress_cuddleconfessions-redirect
+        traefik.http.routers.wordpress-cuddleconfessions-local-insecure.rule: Host(`wordpress-cuddleconfessions.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-cuddleconfessions-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-cuddleconfessions-local-insecure.service: wordpress-cuddleconfessions
+        traefik.http.routers.wordpress-cuddleconfessions-local-insecure.middlewares: wordpress-cuddleconfessions-redirect
         # Local domain secure
-        traefik.http.routers.wordpress_cuddleconfessions-local.rule: Host(`wordpress_cuddleconfessions.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_cuddleconfessions-local.entrypoints: websecure
-        traefik.http.routers.wordpress_cuddleconfessions-local.service: wordpress_cuddleconfessions
-        traefik.http.routers.wordpress_cuddleconfessions-local.tls: true
+        traefik.http.routers.wordpress-cuddleconfessions-local.rule: Host(`wordpress-cuddleconfessions.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-cuddleconfessions-local.entrypoints: websecure
+        traefik.http.routers.wordpress-cuddleconfessions-local.service: wordpress-cuddleconfessions
+        traefik.http.routers.wordpress-cuddleconfessions-local.tls: true
         runtipi.managed: true
   wordpress_cuddleconfessions-db:
     container_name: wordpress_cuddleconfessions-db

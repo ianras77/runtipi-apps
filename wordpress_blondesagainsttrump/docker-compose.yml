@@ -21,28 +21,28 @@ services:
     labels:
         # Main
         traefik.enable: true
-        traefik.http.middlewares.wordpress_blondesagainsttrump-redirect.redirectscheme.scheme: https
-        traefik.http.services.wordpress_blondesagainsttrump.loadbalancer.server.port: 80
+        traefik.http.middlewares.wordpress-blondesagainsttrump-redirect.redirectscheme.scheme: https
+        traefik.http.services.wordpress-blondesagainsttrump.loadbalancer.server.port: 80
         # Web
         traefik.http.routers.wordpress_blondesagainsttrump-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_blondesagainsttrump-insecure.entrypoints: web
-        traefik.http.routers.wordpress_blondesagainsttrump-insecure.service: wordpress_blondesagainsttrump
-        traefik.http.routers.wordpress_blondesagainsttrump-insecure.middlewares: wordpress_blondesagainsttrump-redirect
+        traefik.http.routers.wordpress-blondesagainsttrump-insecure.entrypoints: web
+        traefik.http.routers.wordpress-blondesagainsttrump-insecure.service: wordpress-blondesagainsttrump
+        traefik.http.routers.wordpress-blondesagainsttrump-insecure.middlewares: wordpress-blondesagainsttrump-redirect
         # Websecure
-        traefik.http.routers.wordpress_blondesagainsttrump.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_blondesagainsttrump.entrypoints: websecure
-        traefik.http.routers.wordpress_blondesagainsttrump.service: wordpress_blondesagainsttrump
-        traefik.http.routers.wordpress_blondesagainsttrump.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-blondesagainsttrump.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-blondesagainsttrump.entrypoints: websecure
+        traefik.http.routers.wordpress-blondesagainsttrump.service: wordpress-blondesagainsttrump
+        traefik.http.routers.wordpress-blondesagainsttrump.tls.certresolver: myresolver
         # Local domain
-        traefik.http.routers.wordpress_blondesagainsttrump-local-insecure.rule: Host(`wordpress_blondesagainsttrump.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_blondesagainsttrump-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_blondesagainsttrump-local-insecure.service: wordpress_blondesagainsttrump
-        traefik.http.routers.wordpress_blondesagainsttrump-local-insecure.middlewares: wordpress_blondesagainsttrump-redirect
+        traefik.http.routers.wordpress-blondesagainsttrump-local-insecure.rule: Host(`wordpress-blondesagainsttrump.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-blondesagainsttrump-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-blondesagainsttrump-local-insecure.service: wordpress-blondesagainsttrump
+        traefik.http.routers.wordpress-blondesagainsttrump-local-insecure.middlewares: wordpress-blondesagainsttrump-redirect
         # Local domain secure
-        traefik.http.routers.wordpress_blondesagainsttrump-local.rule: Host(`wordpress_blondesagainsttrump.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_blondesagainsttrump-local.entrypoints: websecure
-        traefik.http.routers.wordpress_blondesagainsttrump-local.service: wordpress_blondesagainsttrump
-        traefik.http.routers.wordpress_blondesagainsttrump-local.tls: true
+        traefik.http.routers.wordpress-blondesagainsttrump-local.rule: Host(`wordpress-blondesagainsttrump.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-blondesagainsttrump-local.entrypoints: websecure
+        traefik.http.routers.wordpress-blondesagainsttrump-local.service: wordpress-blondesagainsttrump
+        traefik.http.routers.wordpress-blondesagainsttrump-local.tls: true
         runtipi.managed: true
   wordpress_blondesagainsttrump-db:
     container_name: wordpress_blondesagainsttrump-db

@@ -1,6 +1,6 @@
 services:
   bewcloud:
-    image: ghcr.io/bewcloud/bewcloud:v1.4.9
+    image: ghcr.io/bewcloud/bewcloud:v1.4.11
     command: -c "deno run --allow-net --allow-read --allow-env migrate-db.ts && deno
       run --allow-all main.ts"
     container_name: bewcloud

@@ -1,6 +1,6 @@
 services:
   immich:
-    image: ghcr.io/immich-app/immich-server:v1.124.2
+    image: ghcr.io/immich-app/immich-server:v1.126.1
     container_name: immich
     restart: unless-stopped
     networks:
@@ -35,7 +35,7 @@ services:
       traefik.http.routers.immich.service: immich
       traefik.http.routers.immich.tls.certresolver: myresolver
   immich-machine-learning:
-    image: ghcr.io/immich-app/immich-machine-learning:v1.124.2
+    image: ghcr.io/immich-app/immich-machine-learning:v1.125.7
     container_name: immich-machine-learning
     restart: unless-stopped
     networks:
@@ -61,7 +61,7 @@ services:
     healthcheck:
       test: redis-cli ping || exit 1
   immich-db:
-    image: tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
+    image: tensorchord/pgvecto-rs:pg14-v0.2.0
     command:
       - postgres
       - -c

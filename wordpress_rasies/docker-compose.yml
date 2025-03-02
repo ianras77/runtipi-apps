@@ -21,34 +21,34 @@ services:
     labels:
         # Enable Traefik and set service port
         traefik.enable: true
-        traefik.http.services.wordpress_rasies.loadbalancer.server.port: 80
+        traefik.http.services.wordpress-rasies.loadbalancer.server.port: 80
 
         # Redirect HTTP to HTTPS
-        traefik.http.middlewares.wordpress_rasies-redirect.redirectscheme.scheme: https
+        traefik.http.middlewares.wordpress-rasies-redirect.redirectscheme.scheme: https
 
         # Web (HTTP) Router - Redirect to HTTPS
-        traefik.http.routers.wordpress_rasies-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_rasies-insecure.entrypoints: web
-        traefik.http.routers.wordpress_rasies-insecure.middlewares: wordpress_rasies-redirect
-        traefik.http.routers.wordpress_rasies-insecure.service: wordpress_rasies
+        traefik.http.routers.wordpress-rasies-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-rasies-insecure.entrypoints: web
+        traefik.http.routers.wordpress-rasies-insecure.middlewares: wordpress-rasies-redirect
+        traefik.http.routers.wordpress-rasies-insecure.service: wordpress-rasies
 
         # Websecure (HTTPS) Router - Main Router for Secure Traffic
-        traefik.http.routers.wordpress_rasies.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_rasies.entrypoints: websecure
-        traefik.http.routers.wordpress_rasies.tls.certresolver: myresolver
-        traefik.http.routers.wordpress_rasies.service: wordpress_rasies
+        traefik.http.routers.wordpress-rasies.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-rasies.entrypoints: websecure
+        traefik.http.routers.wordpress-rasies.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-rasies.service: wordpress-rasies
 
         # Local Domain Router (HTTP)
-        traefik.http.routers.wordpress_rasies-local-insecure.rule: Host(`wordpress_rasies.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_rasies-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_rasies-local-insecure.middlewares: wordpress_rasies-redirect
-        traefik.http.routers.wordpress_rasies-local-insecure.service: wordpress_rasies
+        traefik.http.routers.wordpress-rasies-local-insecure.rule: Host(`wordpress-rasies.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-rasies-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-rasies-local-insecure.middlewares: wordpress-rasies-redirect
+        traefik.http.routers.wordpress-rasies-local-insecure.service: wordpress-rasies
 
         # Local Domain Router (HTTPS)
-        traefik.http.routers.wordpress_rasies-local.rule: Host(`wordpress_rasies.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_rasies-local.entrypoints: websecure
-        traefik.http.routers.wordpress_rasies-local.tls: true
-        traefik.http.routers.wordpress_rasies-local.service: wordpress_rasies
+        traefik.http.routers.wordpress-rasies-local.rule: Host(`wordpress-rasies.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-rasies-local.entrypoints: websecure
+        traefik.http.routers.wordpress-rasies-local.tls: true
+        traefik.http.routers.wordpress-rasies-local.service: wordpress-rasies
 
         # Tag to indicate it's managed by runtipi
         runtipi.managed: true

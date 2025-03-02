@@ -23,34 +23,34 @@ services:
     labels:
         # Enable Traefik and set service port
         traefik.enable: true
-        traefik.http.services.wordpress_aidanras.loadbalancer.server.port: 80
+        traefik.http.services.wordpress-aidanras.loadbalancer.server.port: 80
 
         # Redirect HTTP to HTTPS
-        traefik.http.middlewares.wordpress_aidanras-redirect.redirectscheme.scheme: https
+        traefik.http.middlewares.wordpress-aidanras-redirect.redirectscheme.scheme: https
 
         # Web (HTTP) Router - Redirect to HTTPS
-        traefik.http.routers.wordpress_aidanras-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_aidanras-insecure.entrypoints: web
-        traefik.http.routers.wordpress_aidanras-insecure.middlewares: wordpress_aidanras-redirect
-        traefik.http.routers.wordpress_aidanras-insecure.service: wordpress_aidanras
+        traefik.http.routers.wordpress-aidanras-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-aidanras-insecure.entrypoints: web
+        traefik.http.routers.wordpress-aidanras-insecure.middlewares: wordpress-aidanras-redirect
+        traefik.http.routers.wordpress-aidanras-insecure.service: wordpress-aidanras
 
         # Websecure (HTTPS) Router - Main Router for Secure Traffic
-        traefik.http.routers.wordpress_aidanras.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_aidanras.entrypoints: websecure
-        traefik.http.routers.wordpress_aidanras.tls.certresolver: myresolver
-        traefik.http.routers.wordpress_aidanras.service: wordpress_aidanras
+        traefik.http.routers.wordpress-aidanras.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-aidanras.entrypoints: websecure
+        traefik.http.routers.wordpress-aidanras.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-aidanras.service: wordpress-aidanras
 
         # Local Domain Router (HTTP)
-        traefik.http.routers.wordpress_aidanras-local-insecure.rule: Host(`wordpress_aidanras.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_aidanras-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_aidanras-local-insecure.middlewares: wordpress_aidanras-redirect
-        traefik.http.routers.wordpress_aidanras-local-insecure.service: wordpress_aidanras
+        traefik.http.routers.wordpress-aidanras-local-insecure.rule: Host(`wordpress-aidanras.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-aidanras-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-aidanras-local-insecure.middlewares: wordpress-aidanras-redirect
+        traefik.http.routers.wordpress-aidanras-local-insecure.service: wordpress-aidanras
 
         # Local Domain Router (HTTPS)
-        traefik.http.routers.wordpress_aidanras-local.rule: Host(`wordpress_aidanras.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_aidanras-local.entrypoints: websecure
-        traefik.http.routers.wordpress_aidanras-local.tls: true
-        traefik.http.routers.wordpress_aidanras-local.service: wordpress_aidanras
+        traefik.http.routers.wordpress-aidanras-local.rule: Host(`wordpress-aidanras.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-aidanras-local.entrypoints: websecure
+        traefik.http.routers.wordpress-aidanras-local.tls: true
+        traefik.http.routers.wordpress-aidanras-local.service: wordpress-aidanras
 
         # Tag to indicate it's managed by runtipi
         runtipi.managed: true

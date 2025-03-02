@@ -21,28 +21,28 @@ services:
     labels:
         # Main
         traefik.enable: true
-        traefik.http.middlewares.wordpress_yoginilist-redirect.redirectscheme.scheme: https
-        traefik.http.services.wordpress_yoginilist.loadbalancer.server.port: 80
+        traefik.http.middlewares.wordpress-yoginilist-redirect.redirectscheme.scheme: https
+        traefik.http.services.wordpress-yoginilist.loadbalancer.server.port: 80
         # Web
-        traefik.http.routers.wordpress_yoginilist-insecure.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_yoginilist-insecure.entrypoints: web
-        traefik.http.routers.wordpress_yoginilist-insecure.service: wordpress_yoginilist
-        traefik.http.routers.wordpress_yoginilist-insecure.middlewares: wordpress_yoginilist-redirect
+        traefik.http.routers.wordpress-yoginilist-insecure.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-yoginilist-insecure.entrypoints: web
+        traefik.http.routers.wordpress-yoginilist-insecure.service: wordpress-yoginilist
+        traefik.http.routers.wordpress-yoginilist-insecure.middlewares: wordpress-yoginilist-redirect
         # Websecure
-        traefik.http.routers.wordpress_yoginilist.rule: Host(`${APP_DOMAIN}`)
-        traefik.http.routers.wordpress_yoginilist.entrypoints: websecure
-        traefik.http.routers.wordpress_yoginilist.service: wordpress_yoginilist
-        traefik.http.routers.wordpress_yoginilist.tls.certresolver: myresolver
+        traefik.http.routers.wordpress-yoginilist.rule: Host(`${APP_DOMAIN}`)
+        traefik.http.routers.wordpress-yoginilist.entrypoints: websecure
+        traefik.http.routers.wordpress-yoginilist.service: wordpress-yoginilist
+        traefik.http.routers.wordpress-yoginilist.tls.certresolver: myresolver
         # Local domain
-        traefik.http.routers.wordpress_yoginilist-local-insecure.rule: Host(`wordpress_yoginilist.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_yoginilist-local-insecure.entrypoints: web
-        traefik.http.routers.wordpress_yoginilist-local-insecure.service: wordpress_yoginilist
-        traefik.http.routers.wordpress_yoginilist-local-insecure.middlewares: wordpress_yoginilist-redirect
+        traefik.http.routers.wordpress-yoginilist-local-insecure.rule: Host(`wordpress-yoginilist.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-yoginilist-local-insecure.entrypoints: web
+        traefik.http.routers.wordpress-yoginilist-local-insecure.service: wordpress-yoginilist
+        traefik.http.routers.wordpress-yoginilist-local-insecure.middlewares: wordpress-yoginilist-redirect
         # Local domain secure
-        traefik.http.routers.wordpress_yoginilist-local.rule: Host(`wordpress_yoginilist.${LOCAL_DOMAIN}`)
-        traefik.http.routers.wordpress_yoginilist-local.entrypoints: websecure
-        traefik.http.routers.wordpress_yoginilist-local.service: wordpress_yoginilist
-        traefik.http.routers.wordpress_yoginilist-local.tls: true
+        traefik.http.routers.wordpress-yoginilist-local.rule: Host(`wordpress-yoginilist.${LOCAL_DOMAIN}`)
+        traefik.http.routers.wordpress-yoginilist-local.entrypoints: websecure
+        traefik.http.routers.wordpress-yoginilist-local.service: wordpress-yoginilist
+        traefik.http.routers.wordpress-yoginilist-local.tls: true
         runtipi.managed: true
   wordpress_yoginilist-db:
     container_name: wordpress_yoginilist-db

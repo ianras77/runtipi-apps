@@ -11,9 +11,17 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
       generated: true
-      traefik.enable: false
+      traefik.enable: true
       traefik.http.middlewares.beszel-agent-web-redirect.redirectscheme.scheme: https
       traefik.http.services.beszel-agent.loadbalancer.server.port: "45876"
+      traefik.http.routers.beszel-agent-local-insecure.rule: Host(`beszel-agent.${LOCAL_DOMAIN}`)
+      traefik.http.routers.beszel-agent-local-insecure.entrypoints: web
+      traefik.http.routers.beszel-agent-local-insecure.service: beszel-agent
+      traefik.http.routers.beszel-agent-local-insecure.middlewares: beszel-agent-web-redirect
+      traefik.http.routers.beszel-agent-local.rule: Host(`beszel-agent.${LOCAL_DOMAIN}`)
+      traefik.http.routers.beszel-agent-local.entrypoints: websecure
+      traefik.http.routers.beszel-agent-local.service: beszel-agent
+      traefik.http.routers.beszel-agent-local.tls: true
 networks:
   tipi_main_network:
     name: runtipi_tipi_main_network
